@@ -101,88 +101,84 @@ let activities = [
     }
 ];
 
-document.addEventListener("DOMContentLoaded", function () {
+window.onload = function () {
     const categoryDropdown = document.getElementById("categoryDropdown");
-    const activityDropdown = document.getElementById("activityDropdown");
-    const activityDetails = document.getElementById("activityDetails");
-    const activityId = document.getElementById("activityId");
-    const activityName = document.getElementById("activityName");
-    const activityDescription = document.getElementById("activityDescription");
-    const activityLocation = document.getElementById("activityLocation");
-    const activityPrice = document.getElementById("activityPrice");
-    const purchaseForm = document.getElementById("purchaseForm");
-    const ticketForm = document.getElementById("ticketForm");
-    const purchaseMessage = document.getElementById("purchaseMessage");
+const activityDropdown = document.getElementById("activityDropdown");
+const activityDetails = document.getElementById("activityDetails");
+const activityId = document.getElementById("activityId");
+const activityName = document.getElementById("activityName");
+const activityDescription = document.getElementById("activityDescription");
+const activityLocation = document.getElementById("activityLocation");
+const activityPrice = document.getElementById("activityPrice");
+const purchaseForm = document.getElementById("purchaseForm");
+const ticketForm = document.getElementById("ticketForm");
+const purchaseMessage = document.getElementById("purchaseMessage");
 
-    // Helper function to populate category dropdown
-    function populateCategoryDropdown() {
-        categories.forEach(category => {
+function populateDropdown(dropdown, data) {
+    dropdown.innerHTML = '<option value="" selected>Select one</option>';
+    for (const item of data) {
+        const option = document.createElement("option");
+        option.value = item;
+        option.textContent = item;
+        dropdown.appendChild(option);
+    }
+}
+
+function populateActivityDropdown(category) {
+    activityDropdown.innerHTML = '<option value="" selected>Select one</option>';
+    for (const activity of activities) {
+        if (activity.category == category) {
             const option = document.createElement("option");
-            option.value = category;
-            option.textContent = category;
-            categoryDropdown.appendChild(option);
-        });
+            option.value = activity.id;
+            option.textContent = activity.name;
+            activityDropdown.appendChild(option);
+        }
     }
+}
 
-    // Helper function to populate activity dropdown
-    function populateActivityDropdown(category) {
-        activityDropdown.innerHTML = '<option value="" selected>Select one</option>';
-        activities.forEach(activity => {
-            if (activity.category === category) {
-                const option = document.createElement("option");
-                option.value = activity.id;
-                option.textContent = activity.name;
-                activityDropdown.appendChild(option);
-            }
-        });
+categoryDropdown.onchange = function () {
+    const selectedCategory = categoryDropdown.value;
+    if (selectedCategory) {
+        populateActivityDropdown(selectedCategory);
+        activityDetails.style.display = "none";
+        purchaseForm.style.display = "none";
     }
+};
 
-    // Event listener for category dropdown change
-    categoryDropdown.addEventListener("change", function () {
-        const selectedCategory = categoryDropdown.value;
-        if (selectedCategory) {
-            populateActivityDropdown(selectedCategory);
-            activityDetails.style.display = "none";
+activityDropdown.onchange = function () {
+    const selectedActivityId = activityDropdown.value;
+    if (selectedActivityId) {
+        const selectedActivity = activities.find(activity => activity.id === selectedActivityId);
+        activityId.textContent = selectedActivity.id;
+        activityName.textContent = selectedActivity.name;
+        activityDescription.textContent = selectedActivity.description;
+        activityLocation.textContent = selectedActivity.location;
+        activityPrice.textContent = selectedActivity.price.toFixed(2);
+        activityDetails.style.display = "block";
+
+        if (selectedActivity.price > 0) {
+            purchaseForm.style.display = "block";
+            ticketForm.reset();
+        } else {
             purchaseForm.style.display = "none";
         }
-    });
+    }
+};
 
-    // Event listener for activity dropdown change
-    activityDropdown.addEventListener("change", function () {
-        const selectedActivityId = activityDropdown.value;
-        if (selectedActivityId) {
-            const selectedActivity = activities.find(activity => activity.id === selectedActivityId);
-            activityId.textContent = selectedActivity.id;
-            activityName.textContent = selectedActivity.name;
-            activityDescription.textContent = selectedActivity.description;
-            activityLocation.textContent = selectedActivity.location;
-            activityPrice.textContent = selectedActivity.price.toFixed(2);
-            activityDetails.style.display = "block";
+ticketForm.onsubmit = function (event) {
+    event.preventDefault();
+    const ticketCount = document.getElementById("ticketCount").value;
+    const creditCard = document.getElementById("creditCard").value;
+    const email = document.getElementById("email").value;
+    const activityName = activityDropdown.options[activityDropdown.selectedIndex].text;
+    const totalPrice = (ticketCount * parseFloat(activityPrice.textContent)).toFixed(2);
 
-            if (selectedActivity.price > 0) {
-                purchaseForm.style.display = "block";
-                ticketForm.reset();
-            } else {
-                purchaseForm.style.display = "none";
-            }
-        }
-    });
+    const message = `Your credit card has been charged $${totalPrice} for ${ticketCount} to ${activityName}. A confirmation email has been sent to ${email}.`;
 
-    // Event listener for purchase form submission
-    ticketForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        const ticketCount = document.getElementById("ticketCount").value;
-        const creditCard = document.getElementById("creditCard").value;
-        const email = document.getElementById("email").value;
-        const activityName = activityDropdown.options[activityDropdown.selectedIndex].text;
-        const totalPrice = (ticketCount * parseFloat(activityPrice.textContent)).toFixed(2);
+    purchaseMessage.textContent = message;
+    purchaseMessage.style.display = "block";
+};
 
-        const message = `Your credit card has been charged $${totalPrice} for ${ticketCount} to ${activityName}. A confirmation email has been sent to ${email}.`;
+populateDropdown(categoryDropdown, categories);
 
-        purchaseMessage.textContent = message;
-        purchaseMessage.style.display = "block";
-    });
-
-    // Populate category dropdown on page load
-    populateCategoryDropdown();
-});
+}

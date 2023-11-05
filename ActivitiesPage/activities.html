@@ -63,18 +63,18 @@
                 <option value="" selected>Choose a category</option>
             </select><br>
 
-            <h2>Activities</h2>
+            <h2 style="margin-top: 10px;">Activities</h2>
             <select id="activityDropdown">
                 <option value="" selected>Choose an activity</option>
             </select><br>
 
-            <div id="activityDetails" style="display: none;">
+            <div id="activityDetails" style="display: none; margin-top: 10px;">
                 <h2>Activity Details</h2>
                 <p><strong>Activity ID:</strong> <label id="activityId"></label></p>
-                <p><strong>Name:</strong> <span id="activityName"></span></p>
-                <p><strong>Description:</strong> <span id="activityDescription"></span></p>
-                <p><strong>Location:</strong> <span id="activityLocation"></span></p>
-                <p><strong>Price:</strong> $<span id="activityPrice"></span></p>
+                <p><strong>Name:</strong> <label id="activityName"></label></p>
+                <p><strong>Description:</strong> <label id="activityDescription"></label></p>
+                <p><strong>Location:</strong> <label id="activityLocation"></label></p>
+                <p><strong>Price:</strong> $<label id="activityPrice"></label></p>
             </div>
 
             <div id="purchaseForm" style="display: none;">
@@ -83,12 +83,13 @@
                     <label for="ticketCount">Number of Tickets:</label>
                     <input type="number" id="ticketCount" min="1" required><br>
                     <label for="creditCard">Credit Card Number:</label>
-                    <input type="text" id="creditCard" required><br>
+                    <input type="text" id="creditCard" required placeholder="XXXX-XXXX-XXXX-XXXX"><br>
                     <label for="email">Email Address:</label>
-                    <input type="email" id="email" required><br>
+                    <input type="email" id="email" required placeholder="user@email.com"><br>
                     <button type="submit">Purchase</button>
                     <button type="reset">Reset</button>
-                </form>
+                </form><br>
+    
             </div>
         </div>
     </div>
