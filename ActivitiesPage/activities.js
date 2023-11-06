@@ -103,23 +103,23 @@ let activities = [
 
 window.onload = function () {
     const categoryDropdown = document.getElementById("categoryDropdown");
-const activityDropdown = document.getElementById("activityDropdown");
-const activityDetails = document.getElementById("activityDetails");
-const activityId = document.getElementById("activityId");
-const activityName = document.getElementById("activityName");
-const activityDescription = document.getElementById("activityDescription");
-const activityLocation = document.getElementById("activityLocation");
-const activityPrice = document.getElementById("activityPrice");
-const purchaseForm = document.getElementById("purchaseForm");
-const ticketForm = document.getElementById("ticketForm");
-const purchaseMessage = document.getElementById("purchaseMessage");
+    const activityDropdown = document.getElementById("activityDropdown");
+    const activityDetails = document.getElementById("activityDetails");
+    const activityId = document.getElementById("activityId");
+    const activityName = document.getElementById("activityName");
+    const activityDescription = document.getElementById("activityDescription");
+    const activityLocation = document.getElementById("activityLocation");
+    const activityPrice = document.getElementById("activityPrice");
+    const purchaseForm = document.getElementById("purchaseForm");
+    const ticketForm = document.getElementById("ticketForm");
+    const purchaseMessage = document.getElementById("purchaseMessage");
 
 function populateDropdown(dropdown, data) {
     dropdown.innerHTML = '<option value="" selected>Select one</option>';
     for (const item of data) {
         const option = document.createElement("option");
         option.value = item;
-        option.textContent = item;
+        option.innerText = item;
         dropdown.appendChild(option);
     }
 }
@@ -130,7 +130,7 @@ function populateActivityDropdown(category) {
         if (activity.category == category) {
             const option = document.createElement("option");
             option.value = activity.id;
-            option.textContent = activity.name;
+            option.innerText = activity.name;
             activityDropdown.appendChild(option);
         }
     }
@@ -148,12 +148,12 @@ categoryDropdown.onchange = function () {
 activityDropdown.onchange = function () {
     const selectedActivityId = activityDropdown.value;
     if (selectedActivityId) {
-        const selectedActivity = activities.find(activity => activity.id === selectedActivityId);
-        activityId.textContent = selectedActivity.id;
-        activityName.textContent = selectedActivity.name;
-        activityDescription.textContent = selectedActivity.description;
-        activityLocation.textContent = selectedActivity.location;
-        activityPrice.textContent = selectedActivity.price.toFixed(2);
+        const selectedActivity = activities.find(activity => activity.id == selectedActivityId);
+        activityId.innerText = selectedActivity.id;
+        activityName.innerText = selectedActivity.name;
+        activityDescription.innerText = selectedActivity.description;
+        activityLocation.innerText = selectedActivity.location;
+        activityPrice.innerText = selectedActivity.price.toFixed(2);
         activityDetails.style.display = "block";
 
         if (selectedActivity.price > 0) {
@@ -171,11 +171,11 @@ ticketForm.onsubmit = function (event) {
     const creditCard = document.getElementById("creditCard").value;
     const email = document.getElementById("email").value;
     const activityName = activityDropdown.options[activityDropdown.selectedIndex].text;
-    const totalPrice = (ticketCount * parseFloat(activityPrice.textContent)).toFixed(2);
+    const totalPrice = (ticketCount * parseFloat(activityPrice.innerText)).toFixed(2);
 
     const message = `Your credit card has been charged $${totalPrice} for ${ticketCount} to ${activityName}. A confirmation email has been sent to ${email}.`;
 
-    purchaseMessage.textContent = message;
+    purchaseMessage.innerText = message;
     purchaseMessage.style.display = "block";
 };
 
