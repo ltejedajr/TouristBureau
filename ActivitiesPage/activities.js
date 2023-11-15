@@ -156,28 +156,28 @@ activityDropdown.onchange = function () {
         activityPrice.innerText = selectedActivity.price.toFixed(2);
         activityDetails.style.display = "block";
 
-        if (selectedActivity.price > 0) {
-            purchaseForm.style.display = "block";
-            ticketForm.reset();
-        } else {
-            purchaseForm.style.display = "none";
-        }
+        // if (selectedActivity.price > 0) {
+        //     purchaseForm.style.display = "block";
+        //     ticketForm.reset();
+        // } else {
+        //     purchaseForm.style.display = "none";
+        // }
     }
 };
 
-ticketForm.onsubmit = function (event) {
-    event.preventDefault();
-    const ticketCount = document.getElementById("ticketCount").value;
-    const creditCard = document.getElementById("creditCard").value;
-    const email = document.getElementById("email").value;
-    const activityName = activityDropdown.options[activityDropdown.selectedIndex].text;
-    const totalPrice = (ticketCount * parseFloat(activityPrice.innerText)).toFixed(2);
+// ticketForm.onsubmit = function (event) {
+//     event.preventDefault();
+//     const ticketCount = document.getElementById("ticketCount").value;
+//     const creditCard = document.getElementById("creditCard").value;
+//     const email = document.getElementById("email").value;
+//     const activityName = activityDropdown.options[activityDropdown.selectedIndex].text;
+//     const totalPrice = (ticketCount * parseFloat(activityPrice.innerText)).toFixed(2);
 
-    const message = `Your credit card has been charged $${totalPrice} for ${ticketCount} to ${activityName}. A confirmation email has been sent to ${email}.`;
+//     const message = `Your credit card has been charged $${totalPrice} for ${ticketCount} to ${activityName}. A confirmation email has been sent to ${email}.`;
 
-    purchaseMessage.innerText = message;
-    purchaseMessage.style.display = "block";
-};
+//     purchaseMessage.innerText = message;
+//     purchaseMessage.style.display = "block";
+// };
 
 populateCategoriesDropdown(categoryDropdown, categories);
 
