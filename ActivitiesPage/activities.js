@@ -114,7 +114,7 @@ window.onload = function () {
     const ticketForm = document.getElementById("ticketForm");
     const purchaseMessage = document.getElementById("purchaseMessage");
 
-function populateDropdown(dropdown, data) {
+function populateCategoriesDropdown(dropdown, data) {
     dropdown.innerHTML = '<option value="" selected>Select one</option>';
     for (const item of data) {
         const option = document.createElement("option");
@@ -179,6 +179,6 @@ ticketForm.onsubmit = function (event) {
     purchaseMessage.style.display = "block";
 };
 
-populateDropdown(categoryDropdown, categories);
+populateCategoriesDropdown(categoryDropdown, categories);
 
-}
+};
