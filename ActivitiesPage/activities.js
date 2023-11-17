@@ -154,7 +154,7 @@ activityDropdown.onchange = function () {
         activityDescription.innerText = selectedActivity.description;
         activityLocation.innerText = selectedActivity.location;
         activityPrice.innerText = selectedActivity.price.toFixed(2);
-        activityDetails.style.display = "block";
+        // activityDetails.style.display = "block";
 
         // if (selectedActivity.price > 0) {
         //     purchaseForm.style.display = "block";
